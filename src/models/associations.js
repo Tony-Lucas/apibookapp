@@ -7,4 +7,5 @@ User.hasMany(Postagem);
 Postagem.belongsTo(User);
 User.hasMany(Livro);
 Livro.belongsTo(User)
+
 sequelize.sync({force:true})
