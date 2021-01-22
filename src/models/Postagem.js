@@ -7,6 +7,6 @@ const Postagem = sequelize.define("postagens", {
     data: { type: Sequelize.DATEONLY, allowNull: false },
 })
 
-Postagem.sync({ force: true });
+
 
 module.exports = Postagem;

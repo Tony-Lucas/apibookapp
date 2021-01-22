@@ -7,14 +7,4 @@ const Livro = sequelize.define("livros", {
     autor: { type: Sequelize.STRING, allowNull: false }
 })
 
-Livro.associate = models => {
-    Livro.belongsTo(models.User,{
-        foreignKey:{
-            allowNull:false
-        }
-    })
-}
-
-Livro.sync({force: true})
-
 module.exports = Livro

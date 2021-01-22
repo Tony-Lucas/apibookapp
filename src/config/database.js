@@ -9,7 +9,5 @@ const sequelize = new Sequelize('dbbookapp', 'root', '55425610a', {
     }
 });
 
-sequelize.authenticate()
-
 
 module.exports = sequelize;
