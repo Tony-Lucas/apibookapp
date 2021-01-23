@@ -1,11 +1,10 @@
 const Sequelize = require('sequelize');
 const sequelize = require("../config/database");
 
-const User = sequelize.define("users",{
-    email:{type:Sequelize.STRING,allowNull:false},
-    password:{type:Sequelize.STRING,allowNull:false},
-    nome:{type:Sequelize.STRING,allowNull:false},
-    sobrenome:{type:Sequelize.STRING,allowNull:false}
+const Amigo = sequelize.define("amigos",{
+    
 })
 
-User.sync({force:true})
+Amigo.sync({force:true})
+
+module.exports = Amigo
