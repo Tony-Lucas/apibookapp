@@ -1,6 +1,7 @@
 
 const express = require("express");
 const app = express();
+require('dotenv').config();
 const bodyParser = require('body-parser');
 require("../models/associations");
 const cors = require("cors");
@@ -17,6 +18,6 @@ app.use("/user",userRoute);
 app.use("/login",loginRoute);
 app.use("/livro",livroRoute);
 
-app.listen(3030)
+app.listen(process.env.PORT || 3000)
 
 module.exports = app
