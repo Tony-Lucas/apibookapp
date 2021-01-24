@@ -20,4 +20,4 @@ CurtidaPostagem.belongsTo(Postagem);
 Comentario.hasMany(CurtidaComentario);
 CurtidaComentario.belongsTo(Comentario);
 
-sequelize.sync({force:true})
+sequelize.sync({force:false})
