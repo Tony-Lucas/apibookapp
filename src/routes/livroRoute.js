@@ -4,8 +4,8 @@ const Livro = require("../models/Livro");
 const authentication = require("../middleware/Authentication")
 
 Router.get("/:userId/:token", authentication, async (req, res) => {
-    const livro = await Livro.findOne({ where: { userId: req.params.userId } });
-    if (user) {
+    const livro = await Livro.findAll({ where: { userId: req.params.userId } });
+    if (livro) {
         res.json({ success: true, user: user })
     } else {
         res.json({ success: false })
