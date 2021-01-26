@@ -3,7 +3,7 @@ const Router = express.Router();
 const Livro = require("../models/Livro");
 const authentication = require("../middleware/Authentication")
 
-Router.get("/:id", authentication, async (req, res) => {
+Router.get("/:id/:token", authentication, async (req, res) => {
     const livro = await Livro.findOne({ where: { id: req.params.userId } });
     if (user) {
         res.json({ success: true, user: user })
