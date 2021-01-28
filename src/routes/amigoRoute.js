@@ -14,8 +14,8 @@ Router.get("/:userId/:token", authentication, async (req, res) => {
     }
 })
 
-Router.get("/:token", authentication, async (req, res) => {
-    const leitores = await User.findAll({where:{nome:{[Op.like]: [req.body.nome]}}});
+Router.get("/:nome/:token", authentication, async (req, res) => {
+    const leitores = await User.findAll({where:{nome:{[Op.like]: [req.params.nome]}}});
     if(leitores){
         res.json({ success: true,leitores: leitores})
     }else{
