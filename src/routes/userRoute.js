@@ -5,7 +5,6 @@ const bcrypt = require("bcrypt-nodejs");
 const authentication = require("../middleware/Authentication")
 const { Op } = require("sequelize");
 const multer = require("multer");
-const { path } = require("../config/server");
 const path = require('path');
 
 const storage = multer.diskStorage({
