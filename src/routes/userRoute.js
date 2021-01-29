@@ -11,7 +11,7 @@ const storage = multer.diskStorage({
         cb(null,"uploads/photoUsers")
     },
     filename:function (req,file,cb){
-        cb(null,file.fieldname + "-" + Date.now())
+        cb(null,file.originalname + "-" + Date.now())
     }
 })
 
@@ -43,7 +43,7 @@ Router.get("/busca/:nome/:token", authentication, async (req, res) => {
     }
 })
 
-Router.post("/", upload.single("foto"), async (req, res) => {
+Router.post("/",async (req, res) => {
     const userCheck = await User.findOne({ where: { email: req.body.email } })
     if (!userCheck) {
         const hash = bcrypt.hashSync(req.body.password)
@@ -55,6 +55,15 @@ Router.post("/", upload.single("foto"), async (req, res) => {
         }
     } else {
         res.json({ success: false, message: "Usuario já cadastrado" })
+    }
+})
+
+Router.post("/addphoto",upload.single("foto"),authentication, async(req,res) => {
+    const user = await User.update({nomeFoto:req.file.filename},{where:{id:req.body.id}})
+    if(user){
+        res.json({ success: true, user: user})
+    }else{
+        res.json({ success: false})
     }
 })
 
