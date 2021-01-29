@@ -4,6 +4,8 @@ const User = require("../models/User")
 const bcrypt = require("bcrypt-nodejs");
 const authentication = require("../middleware/Authentication")
 const { Op } = require("sequelize");
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" })
 
 Router.get("/:token", authentication, async (req, res) => {
     const users = await User.findAll()
@@ -22,16 +24,16 @@ Router.get("/:id/:token", authentication, async (req, res) => {
     }
 })
 
-Router.get("/busca/:nome/:token", authentication,async (req, res) => {
-    const users = await User.findAll({where:{nome:{[Op.like]: req.params.nome}}});
-    if(users){
+Router.get("/busca/:nome/:token", authentication, async (req, res) => {
+    const users = await User.findAll({ where: { nome: { [Op.like]: req.params.nome } } });
+    if (users) {
         res.json({ success: true, users: users })
-    }else{
-        res.json({ success: false})
+    } else {
+        res.json({ success: false })
     }
 })
 
-Router.post("/", async (req, res) => {
+Router.post("/", upload.single("foto"), async (req, res) => {
     const userCheck = await User.findOne({ where: { email: req.body.email } })
     if (!userCheck) {
         const hash = bcrypt.hashSync(req.body.password)
