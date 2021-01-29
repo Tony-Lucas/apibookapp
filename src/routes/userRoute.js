@@ -3,6 +3,7 @@ const Router = express.Router();
 const User = require("../models/User")
 const bcrypt = require("bcrypt-nodejs");
 const authentication = require("../middleware/Authentication")
+const { Op } = require("sequelize");
 
 Router.get("/:token", authentication, async (req, res) => {
     const users = await User.findAll()

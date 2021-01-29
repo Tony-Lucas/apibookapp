@@ -3,7 +3,7 @@ const Router = express.Router();
 const Amigo = require("../models/Amigo");
 const User = require("../models/User")
 const authentication = require("../middleware/Authentication")
-const { Op } = require("sequelize");
+
 
 Router.get("/:userId/:token", authentication, async (req, res) => {
     const amigos = await Amigo.findAll({ where: { userId: req.params.userId } });
