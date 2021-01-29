@@ -15,7 +15,7 @@ const storage = multer.diskStorage({
     }
 })
 
-const upload = multer({ dest: "uploads/" })
+const upload = multer({ storage: storage })
 
 Router.get("/:token", authentication, async (req, res) => {
     const users = await User.findAll()
