@@ -8,11 +8,11 @@ const multer = require("multer");
 const { path } = require("../config/server");
 
 const storage = multer.diskStorage({
-    destination: function (req,file,cb){
-        cb(null,'./public/uploads')
+    destination: function (req, file, cb) {
+        cb(null, './public/uploads')
     },
-    filename:function (req,file,cb){
-        cb(null,file.originalname + "-" + Date.now())
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + '-' + file.originalname)
     }
 })
 
@@ -44,7 +44,7 @@ Router.get("/busca/:nome/:token", authentication, async (req, res) => {
     }
 })
 
-Router.post("/",async (req, res) => {
+Router.post("/", async (req, res) => {
     const userCheck = await User.findOne({ where: { email: req.body.email } })
     if (!userCheck) {
         const hash = bcrypt.hashSync(req.body.password)
@@ -59,12 +59,12 @@ Router.post("/",async (req, res) => {
     }
 })
 
-Router.post("/addphoto",upload.single("foto"),authentication, async(req,res) => {
-    const user = await User.update({nomeFoto:req.file.filename},{where:{id:req.body.id}})
-    if(user){
-        res.json({ success: true, user: user})
-    }else{
-        res.json({ success: false})
+Router.post("/addphoto", upload.single("foto"), authentication, async (req, res) => {
+    const user = await User.update({ nomeFoto: req.file.filename }, { where: { id: req.body.id } })
+    if (user) {
+        res.json({ success: true, user: user })
+    } else {
+        res.json({ success: false })
     }
 })
 
