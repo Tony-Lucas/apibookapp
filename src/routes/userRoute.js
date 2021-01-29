@@ -22,7 +22,7 @@ Router.get("/:id/:token", authentication, async (req, res) => {
     }
 })
 
-Router.get("/busca/:nome/:token", async (req, res) => {
+Router.get("/busca/:nome/:token", authentication,async (req, res) => {
     const users = await User.findAll({where:{nome:{[Op.like]: [req.params.nome]}}});
     if(users){
         res.json({ success: true, users: users })
