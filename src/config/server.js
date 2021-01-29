@@ -9,6 +9,7 @@ const cors = require("cors");
 app.use(cors())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
+app.use(express.static("public"))
 
 const userRoute = require("../routes/userRoute")
 const loginRoute = require("../routes/loginRoute")

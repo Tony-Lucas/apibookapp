@@ -5,6 +5,16 @@ const bcrypt = require("bcrypt-nodejs");
 const authentication = require("../middleware/Authentication")
 const { Op } = require("sequelize");
 const multer = require("multer");
+
+const storage = multer.diskStorage({
+    destination: function (req,file,cb){
+        cb(null,"uploads/photoUsers")
+    },
+    filename:function (req,file,cb){
+        cb(null,file.fieldname + "-" + Date.now())
+    }
+})
+
 const upload = multer({ dest: "uploads/" })
 
 Router.get("/:token", authentication, async (req, res) => {
