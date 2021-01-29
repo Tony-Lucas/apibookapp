@@ -6,10 +6,11 @@ const authentication = require("../middleware/Authentication")
 const { Op } = require("sequelize");
 const multer = require("multer");
 const path = require('path');
+const fs = require("fs");
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'public/uploads')
+        cb(null, './uploads/')
     },
     filename: function (req, file, cb) {
         cb(null, Date.now() + '-' + file.originalname)
@@ -60,11 +61,20 @@ Router.post("/", async (req, res) => {
 })
 
 Router.post("/addphoto", upload.single("foto"), authentication, async (req, res) => {
-    const user = await User.update({ nomeFoto: req.file.filename }, { where: { id: req.body.id } })
-    if (user) {
-        res.json({ success: true, user: user })
-    } else {
-        res.json({ success: false })
+    const hasFoto = await User.findOne({ where: { id: req.body.id } })
+    if (hasFoto.nomeFoto && req.file) {
+        if (fs.existsSync(`./uploads/${req.body.nomeFoto}`)) {
+            fs.unlinkSync(`./uploads/${req.body.nomeFoto}`);
+            const user = await User.update({ nomeFoto: req.body.nomeFoto }, { where: { id: req.body.id } })
+            if (user) {
+                res.json({ success: true, user: user })
+            }
+        }
+    } else if (!hasFoto.nomeFoto && req.file) {
+        const user = await User.update({ nomeFoto: req.file.filename }, { where: { id: req.body.id } })
+        if (user) {
+            res.json({ success: true, user: user })
+        }
     }
 })
 
